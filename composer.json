@@ -1,0 +1,62 @@
+{
+    "name": "finagin/laravel-comment",
+    "description": "Comments for Laravel 5.4 and up",
+    "version": "0.1.0",
+    "keywords": [
+        "finagin",
+        "laravel",
+        "comments"
+    ],
+    "homepage": "https://github.com/finagin/laravel-comment",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Igor Finagin",
+            "email": "Igor@Finag.in",
+            "homepage": "https://Finag.in",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "illuminate/auth": "~5.4.0",
+        "illuminate/container": "~5.4.0",
+        "illuminate/contracts": "~5.4.0",
+        "illuminate/database": "~5.4.0"
+    },
+    "require-dev": {
+        "monolog/monolog": "^1.22",
+        "orchestra/database": "^3.4",
+        "orchestra/testbench": "^3.0",
+        "phpunit/php-code-coverage": "^5.2",
+        "phpunit/phpunit": "^6.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Finagin\\Comment\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Finagin\\Comment\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": [
+            "@composer install",
+            "phpunit --colors --testdox"
+        ],
+        "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
+        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Finagin\\Comment\\CommentServiceProvider"
+            ]
+        }
+    }
+}

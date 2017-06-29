@@ -1,0 +1,83 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+
+class CreateCommentsTables extends Migration
+{
+    protected $names = [];
+    protected $prefix = '';
+
+    public function __construct()
+    {
+        $tablePrefix = config('laravel-comment.table.prefix');
+
+        $this->prefix = $tablePrefix ? $tablePrefix.'_' : '';
+        $this->names  = config('laravel-comment.table.names');
+    }
+
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create(
+            $this->getTableName('comments'),
+            function (Blueprint $table) {
+                $table->increments('id');
+
+                /* Parents */
+                $table->integer('commentable_id');
+                $table->string('commentable_type');
+                $table->integer('comment_id')->nullable();
+
+                /* Commentator */
+                $table->integer('commentator_id')->nullable();
+                $table->string('commentator_type');
+                $table->string('commentator_name')->nullable();
+
+                /* Fields */
+                $table->longText('text');
+                $table->boolean('approved')->default(true);
+                $table->double('rate', 8, 3)->nullable();
+
+                $table->timestamps();
+                $table->softDeletes();
+
+                /* Indexes */
+                $table->index(['commentable_id', 'commentable_type']);
+                $table->index(['commentator_id', 'commentator_type']);
+
+                /* Foreign Key Constraints */
+                $table->foreign('comment_id')
+                      ->references('id')
+                      ->on($this->getTableName('comments'))
+                      ->onDelete('cascade');
+            }
+        );
+    }
+
+    /**
+     * Get compiled table name with options
+     *
+     * @param String $key
+     *
+     * @return String
+     */
+    protected function getTableName(String $key): String
+    {
+        return $this->prefix.$this->names[$key];
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists($this->getTableName('comments'));
+    }
+}
