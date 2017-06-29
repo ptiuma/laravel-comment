@@ -2,8 +2,8 @@
 
 namespace Finagin\Comment\Traits;
 
-use Finagin\Comment\Exceptions\NotCommentableException;
 use Finagin\Comment\Models\Comment;
+use Finagin\Comment\Exceptions\NotCommentableException;
 
 trait CanComment
 {
@@ -40,7 +40,6 @@ trait CanComment
             'commentator_type' => get_class(),
             'commentator_name' => $this->name,
         ];
-
 
         $comment = new Comment($attributes);
 
