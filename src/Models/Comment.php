@@ -2,9 +2,9 @@
 
 namespace Finagin\Comment\Models;
 
-use Finagin\Comment\Contracts\Comment as CommentContracts;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Finagin\Comment\Contracts\Comment as CommentContracts;
 
 class Comment extends Model implements CommentContracts
 {
@@ -78,8 +78,8 @@ class Comment extends Model implements CommentContracts
     public function commentator()
     {
         $commentator = $this->commentator_type::firstOrNew(
-            ['id' => $this->commentator_id,],
-            ['name' => $this->commentator_name,]
+            ['id' => $this->commentator_id],
+            ['name' => $this->commentator_name]
         );
 
         return $commentator;
@@ -87,7 +87,7 @@ class Comment extends Model implements CommentContracts
 
     public function children()
     {
-        return Comment::where(
+        return self::where(
             [
                 'commentable_id'   => $this->commentable_id,
                 'commentable_type' => $this->commentable_type,

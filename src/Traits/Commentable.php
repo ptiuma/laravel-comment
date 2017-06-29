@@ -44,11 +44,10 @@ trait Commentable
         return true;
     }
 
-
     /**
      * @param bool $all All comments with not approved
      *
-     * @return integer
+     * @return int
      */
     public function commentCount($all = false)
     {
